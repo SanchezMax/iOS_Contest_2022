@@ -7,18 +7,39 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		703B3031290A9A4F00803B79 /* TextBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703B3030290A9A4F00803B79 /* TextBox.swift */; };
 		704E2FE329080BE50012692E /* IOSContest2022App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704E2FE229080BE50012692E /* IOSContest2022App.swift */; };
 		704E2FE529080BE50012692E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704E2FE429080BE50012692E /* ContentView.swift */; };
 		704E2FE729080BE50012692E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 704E2FE629080BE50012692E /* Assets.xcassets */; };
 		704E2FEA29080BE50012692E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 704E2FE929080BE50012692E /* Preview Assets.xcassets */; };
+		70990DF0290BB44100AD1F4D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70990DEF290BB44100AD1F4D /* AppDelegate.swift */; };
+		70990DF2290BB46500AD1F4D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70990DF1290BB46500AD1F4D /* SceneDelegate.swift */; };
+		70990DF4290C047600AD1F4D /* AccessScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70990DF3290C047600AD1F4D /* AccessScreen.swift */; };
+		70B79F3F290A7B76007A34A0 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B79F3E290A7B76007A34A0 /* ImagePicker.swift */; };
+		70B79F41290A7E14007A34A0 /* DrawingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B79F40290A7E14007A34A0 /* DrawingViewModel.swift */; };
+		70B79F43290A83EB007A34A0 /* DrawingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B79F42290A83EB007A34A0 /* DrawingScreen.swift */; };
+		70B79F45290A883A007A34A0 /* ToolPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B79F44290A883A007A34A0 /* ToolPicker.swift */; };
+		70C59C33290D22930046241D /* Tool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C59C32290D22930046241D /* Tool.swift */; };
+		70E409F9290A6CF0001E1920 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E409F8290A6CF0001E1920 /* Home.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		703B3030290A9A4F00803B79 /* TextBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextBox.swift; sourceTree = "<group>"; };
 		704E2FDF29080BE50012692E /* IOSContest2022.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IOSContest2022.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		704E2FE229080BE50012692E /* IOSContest2022App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOSContest2022App.swift; sourceTree = "<group>"; };
 		704E2FE429080BE50012692E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		704E2FE629080BE50012692E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		704E2FE929080BE50012692E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		70990DEA290BACD000AD1F4D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		70990DEF290BB44100AD1F4D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		70990DF1290BB46500AD1F4D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		70990DF3290C047600AD1F4D /* AccessScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessScreen.swift; sourceTree = "<group>"; };
+		70B79F3E290A7B76007A34A0 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		70B79F40290A7E14007A34A0 /* DrawingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingViewModel.swift; sourceTree = "<group>"; };
+		70B79F42290A83EB007A34A0 /* DrawingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingScreen.swift; sourceTree = "<group>"; };
+		70B79F44290A883A007A34A0 /* ToolPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolPicker.swift; sourceTree = "<group>"; };
+		70C59C32290D22930046241D /* Tool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tool.swift; sourceTree = "<group>"; };
+		70E409F8290A6CF0001E1920 /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,9 +72,15 @@
 		704E2FE129080BE50012692E /* IOSContest2022 */ = {
 			isa = PBXGroup;
 			children = (
+				70990DEF290BB44100AD1F4D /* AppDelegate.swift */,
+				70990DF1290BB46500AD1F4D /* SceneDelegate.swift */,
 				704E2FE229080BE50012692E /* IOSContest2022App.swift */,
 				704E2FE429080BE50012692E /* ContentView.swift */,
 				704E2FE629080BE50012692E /* Assets.xcassets */,
+				70990DEA290BACD000AD1F4D /* Info.plist */,
+				70E409F6290A6BE8001E1920 /* Model */,
+				70E409F5290A6BE0001E1920 /* View */,
+				70E409F7290A6BEC001E1920 /* ViewModel */,
 				704E2FE829080BE50012692E /* Preview Content */,
 			);
 			path = IOSContest2022;
@@ -65,6 +92,35 @@
 				704E2FE929080BE50012692E /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		70E409F5290A6BE0001E1920 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				70990DF3290C047600AD1F4D /* AccessScreen.swift */,
+				70B79F42290A83EB007A34A0 /* DrawingScreen.swift */,
+				70E409F8290A6CF0001E1920 /* Home.swift */,
+				70B79F3E290A7B76007A34A0 /* ImagePicker.swift */,
+				70B79F44290A883A007A34A0 /* ToolPicker.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		70E409F6290A6BE8001E1920 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				703B3030290A9A4F00803B79 /* TextBox.swift */,
+				70C59C32290D22930046241D /* Tool.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		70E409F7290A6BEC001E1920 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				70B79F40290A7E14007A34A0 /* DrawingViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -138,6 +194,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				704E2FE529080BE50012692E /* ContentView.swift in Sources */,
+				70B79F3F290A7B76007A34A0 /* ImagePicker.swift in Sources */,
+				70990DF4290C047600AD1F4D /* AccessScreen.swift in Sources */,
+				70C59C33290D22930046241D /* Tool.swift in Sources */,
+				70B79F43290A83EB007A34A0 /* DrawingScreen.swift in Sources */,
+				70990DF0290BB44100AD1F4D /* AppDelegate.swift in Sources */,
+				70B79F41290A7E14007A34A0 /* DrawingViewModel.swift in Sources */,
+				70990DF2290BB46500AD1F4D /* SceneDelegate.swift in Sources */,
+				70E409F9290A6CF0001E1920 /* Home.swift in Sources */,
+				70B79F45290A883A007A34A0 /* ToolPicker.swift in Sources */,
+				703B3031290A9A4F00803B79 /* TextBox.swift in Sources */,
 				704E2FE329080BE50012692E /* IOSContest2022App.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -270,11 +336,13 @@
 				DEVELOPMENT_TEAM = 75HJK5L45N;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_FILE = IOSContest2022/Info.plist;
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "This app needs your permission to take photos";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -303,11 +371,13 @@
 				DEVELOPMENT_TEAM = 75HJK5L45N;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_FILE = IOSContest2022/Info.plist;
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "This app needs your permission to take photos";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
