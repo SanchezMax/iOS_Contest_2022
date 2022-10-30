@@ -7,6 +7,7 @@
 
 import SwiftUI
 import PencilKit
+import Lottie
 
 enum Options: String, CaseIterable, Identifiable {
     case draw
@@ -22,6 +23,24 @@ enum Options: String, CaseIterable, Identifiable {
             return "Draw"
         case .text:
             return "Text"
+        }
+    }
+}
+
+enum Eraser: String, CaseIterable, Identifiable {
+    case bitmap
+    case vector
+    
+    var id: Self {
+        self
+    }
+    
+    var title: String {
+        switch self {
+        case .bitmap:
+            return "Pixel"
+        case .vector:
+            return "Object"
         }
     }
 }
@@ -59,10 +78,14 @@ enum Tools: CaseIterable, Identifiable {
 struct ToolPicker: View {
     @EnvironmentObject var model: DrawingViewModel
     
-    @State var changesMade: Bool = false
     @State private var selectedOption: Options = .draw
     @State private var selectedTool: Tools = .pen
+    @State private var selectedEraser: Eraser = .bitmap
     
+    @State var animationView = LottieAnimationView(name: "backToCancel")
+    @State var isItemSelected: Bool = false
+    
+    @Binding var canUndo: Bool
     
     var body: some View {
         VStack {
@@ -70,19 +93,6 @@ struct ToolPicker: View {
             ZStack(alignment: .bottom) {
                 switch selectedOption {
                 case .draw:
-                    if model.tools[selectedTool.index].isDrawing {
-                        Slider(value: $model.tools[selectedTool.index].width, in: 2...24.0, onEditingChanged: { flag in
-                            if !flag {
-                                model.tools[selectedTool.index].tool = PKInkingTool(
-                                    model.tools[selectedTool.index].inkType!,
-                                    color: model.tools[selectedTool.index].color!.uiColor(),
-                                    width: model.tools[selectedTool.index].width
-                                )
-                                model.canvas.tool = model.tools[selectedTool.index].tool
-                            }
-                        })
-                        .padding(.bottom, 130)
-                    }
                     HStack {
                         ZStack {
                             Circle()
@@ -117,24 +127,29 @@ struct ToolPicker: View {
                                 isDrawing: model.tools[tool.index].isDrawing,
                                 toolSize: $model.tools[tool.index].width
                             )
-                            .scaleEffect(selectedTool == tool ? 1.05 : 1.0)
+                            .scaleEffect(selectedTool == tool ? (isItemSelected ? 2.0 : 1.05) : (isItemSelected ? 0.0 : 1.0))
                             .offset(y: selectedTool == tool ? -15 : 0)
                             .onTapGesture {
                                 withAnimation {
                                     if selectedTool == tool {
-                                        
+                                        if !isItemSelected {
+                                            animationView.play(fromProgress: 0.5, toProgress: 1.0)
+                                            isItemSelected = true
+                                        }
                                     } else {
-                                        selectedTool = tool
-                                        if model.tools[tool.index].isDrawing {
-                                            model.canvas.tool = PKInkingTool(
-                                                model.tools[tool.index].inkType!,
-                                                color: model.tools[tool.index].color!.uiColor(),
-                                                width: model.tools[tool.index].width
-                                            )
-                                        } else if model.tools[tool.index].eraserType == nil {
-                                            model.canvas.tool = PKLassoTool()
-                                        } else {
-                                            model.canvas.tool = PKEraserTool(model.tools[tool.index].eraserType!)
+                                        if !isItemSelected {
+                                            selectedTool = tool
+                                            if model.tools[tool.index].isDrawing {
+                                                model.canvas.tool = PKInkingTool(
+                                                    model.tools[tool.index].inkType!,
+                                                    color: model.tools[tool.index].color!.uiColor(),
+                                                    width: model.tools[tool.index].width
+                                                )
+                                            } else if model.tools[tool.index].eraserType == nil {
+                                                model.canvas.tool = PKLassoTool()
+                                            } else {
+                                                model.canvas.tool = PKEraserTool(model.tools[tool.index].eraserType!)
+                                            }
                                         }
                                     }
                                 }
@@ -148,28 +163,137 @@ struct ToolPicker: View {
                     }
                     .padding(.bottom, 15)
                 case .text:
-                    Circle()
+                    EmptyView()
                 }
                 HStack(alignment: .bottom) {
-                    Image("cancel")
-                        .renderingMode(.template)
-                    
-                    Picker("Picker", selection: $selectedOption.animation()) {
-                        ForEach(Options.allCases) { option in
-                            Text(option.title).tag(option)
+                    Button {
+                        if isItemSelected {
+                            animationView.play(fromProgress: 0.0, toProgress: 0.5)
+                            withAnimation {
+                                isItemSelected.toggle()
+                            }
+                        } else {
+                            if canUndo || !model.textBoxes.isEmpty {
+                                model.unsavedAlert()
+                            } else {
+                                model.cancelImageEditing()
+                            }
                         }
+                    } label: {
+                        LottieView(animationView: $animationView)
+                            .frame(width: 33, height: 33)
+                            .onAppear {
+                                animationView.play(toProgress: 0.5)
+                            }
                     }
-                    .background(Color("appearence").blur(radius: 1))
-                    .pickerStyle(.segmented)
-                    .padding(.horizontal, 8)
-                    .shadow(color: Color("appearence").opacity(0.5), radius: 8, x: 0, y: -16)
-                    .shadow(color: Color("appearence").opacity(0.5), radius: 8, x: 0, y: 16)
+                    .background(Color("appearence").blur(radius: 2))
+                    .shadow(color: Color("appearence").opacity(0.5), radius: 8, x: -16, y: 0)
+                    .shadow(color: Color("appearence").opacity(0.5), radius: 8, x: 16, y: 0)
+                    .zIndex(1.3)
                     
-                    Image("download")
-                        .renderingMode(.template)
-                        .opacity(changesMade ? 1.0 : 0.3)
-                        .disabled(!changesMade)
+                    if isItemSelected {
+                        if model.tools[selectedTool.index].isDrawing {
+                            HStack {
+                                Spacer()
+                                CustomSlider(value: $model.tools[selectedTool.index].width, in: 2...24, onEditingChanged: { flag in
+                                    if !flag {
+                                        model.tools[selectedTool.index].tool = PKInkingTool(
+                                            model.tools[selectedTool.index].inkType!,
+                                            color: model.tools[selectedTool.index].color!.uiColor(),
+                                            width: model.tools[selectedTool.index].width
+                                        )
+                                        model.canvas.tool = model.tools[selectedTool.index].tool
+                                    }
+                                }, track: {
+                                    SliderBack()
+                                        .foregroundColor(.white.opacity(0.2))
+                                        .frame(width: 240, height: 24)
+                                }, fill: {
+                                    EmptyView()
+                                }, thumb: {
+                                    Circle()
+                                        .foregroundColor(.white)
+                                        .shadow(radius: 33 / 1)
+                                }, thumbSize: CGSize(width: 33, height: 33))
+                                Spacer()
+                            }
+                            .background(
+                                VStack {
+                                    Spacer()
+                                    Rectangle()
+                                        .fill(
+                                            LinearGradient(gradient: Gradient(colors: [Color.clear, Color.black.opacity(0.8), Color.black]), startPoint: .top, endPoint: .bottom))
+                                        .frame(height: UIScreen.main.bounds.size.height * 0.17)
+                                        .zIndex(1.3)
+                                }
+                                    .edgesIgnoringSafeArea(.all)
+                            )
+                            .transition(.move(edge: .trailing).combined(with: .opacity))
+                        } else if model.tools[selectedTool.index].eraserType != nil {
+                            Picker("Picker",
+                                   selection: $selectedEraser.animation().onChange({ type in
+                                    switch type {
+                                    case .bitmap:
+                                        model.tools[selectedTool.index].eraserType = .bitmap
+                                    case .vector:
+                                        model.tools[selectedTool.index].eraserType = .vector
+                                    }
+                                model.canvas.tool = PKEraserTool(model.tools[selectedTool.index].eraserType!)
+                                })) {
+                                    ForEach(Eraser.allCases) { option in
+                                        Text(option.title).tag(option)
+                                    }
+                                }
+                                .background(Color("appearence").blur(radius: 1))
+                                .pickerStyle(.segmented)
+                                .padding(.horizontal, 8)
+                                .shadow(color: Color("appearence").opacity(0.5), radius: 8, x: 0, y: -16)
+                                .shadow(color: Color("appearence").opacity(0.5), radius: 8, x: 0, y: 16)
+                        } else {
+                            Spacer()
+                        }
+                    } else {
+                        HStack {
+                            Picker("Picker",
+                                   selection: $selectedOption
+                                .animation()
+                                .onChange{ option in
+                                    switch option {
+                                    case .draw:
+                                        model.cancelTextView()
+                                    case .text:
+                                        model.textBoxes.append(TextBox())
+                                        
+                                        model.currentIndex = model.textBoxes.count - 1
+                                        
+                                        withAnimation {
+                                            model.addNewBox.toggle()
+                                        }
+                                        // TODO: closing ToolPicker
+                                    }
+                                }) {
+                                    ForEach(Options.allCases) { option in
+                                        Text(option.title).tag(option)
+                                    }
+                                }
+                                .background(Color("appearence").blur(radius: 1))
+                                .pickerStyle(.segmented)
+                                .padding(.horizontal, 8)
+                                .shadow(color: Color("appearence").opacity(0.5), radius: 8, x: 0, y: -16)
+                                .shadow(color: Color("appearence").opacity(0.5), radius: 8, x: 0, y: 16)
+                            
+                            Button {
+                                model.saveImage()
+                            } label: {
+                                Image("download")
+                                    .renderingMode(.template)
+                            }
+                            .disabled(!canUndo)
+                        }
+                        .transition(.move(edge: .leading).combined(with: .opacity))
+                    }
                 }
+                .transition(.move(edge: .bottom).combined(with: .opacity))
             }
         }
         .onAppear() {
@@ -183,6 +307,7 @@ struct ToolPicker: View {
                     .fill(
                         LinearGradient(gradient: Gradient(colors: [Color.clear, Color.black.opacity(0.8), Color.black]), startPoint: .top, endPoint: .bottom))
                     .frame(height: UIScreen.main.bounds.size.height * 0.17)
+                    .zIndex(1.3)
             }
                 .edgesIgnoringSafeArea(.all)
         )
@@ -191,38 +316,19 @@ struct ToolPicker: View {
     
 }
 
-struct ToolView: View {
-    let base: String
-    let tip: String?
-    let color: Color?
-    let padding: CGFloat?
-    let isDrawing: Bool
-    
-    @Binding var toolSize: CGFloat
-    
-    var body: some View {
-        ZStack(alignment: .top) {
-            Image(base)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-            if isDrawing {
-                Image(tip!)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .colorMultiply(color!)
-                RoundedRectangle(cornerRadius: 1, style: .continuous)
-                    .fill(color!)
-                    .frame(width: 18.5, height: toolSize, alignment: .top)
-                    .padding(.top, padding!)
-            }
-        }
-        .frame(height: 97)
-        .padding(.horizontal, 8)
+struct ToolPicker_Previews: PreviewProvider {
+    static var previews: some View {
+        Home(isAuthorized: true)
     }
 }
 
-struct ToolPicker_Previews: PreviewProvider {
-    static var previews: some View {
-        ToolPicker()
+extension Binding {
+    func onChange(_ handler: @escaping (Value) -> Void) -> Binding<Value> {
+        return Binding(
+            get: { self.wrappedValue },
+            set: { selection in
+                self.wrappedValue = selection
+                handler(selection)
+            })
     }
 }

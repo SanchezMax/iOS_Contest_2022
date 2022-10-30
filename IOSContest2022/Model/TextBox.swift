@@ -12,6 +12,8 @@ struct TextBox: Identifiable {
     var text: String = ""
     var isBold: Bool = false
     
+    var fontSize: CGFloat = 36
+    
     var scale: CGFloat = 1.0
     var lastScale: CGFloat = 1.0
     var angle: Angle = .zero

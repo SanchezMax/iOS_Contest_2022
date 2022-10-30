@@ -31,9 +31,12 @@ class DrawingViewModel: ObservableObject {
     @Published var rect: CGRect = .zero
     
     @Published var showAlert = false
+    @Published var title = ""
     @Published var message = ""
+    @Published var action: (() -> Void)? = nil
+    @Published var actionMessage = ""
     
-    func cancelImageEditing() {
+    func cancelImageEditing() -> Void {
         withAnimation {
             imageData = Data(count: 0)
         }
@@ -91,6 +94,14 @@ class DrawingViewModel: ObservableObject {
         return index
     }
     
+    func unsavedAlert() {
+        self.title = "Unsaved changes"
+        self.message = "Are you sure you want to discard this media? It will be lost"
+        self.action = cancelImageEditing
+        self.actionMessage = "Discard"
+        self.showAlert.toggle()
+    }
+    
     func saveImage() {
         UIGraphicsBeginImageContextWithOptions(rect.size, false, 0)
         
@@ -100,7 +111,7 @@ class DrawingViewModel: ObservableObject {
             ForEach(textBoxes) { [self] box in
                 Text(textBoxes[currentIndex].id == box.id && addNewBox ? "" : box.text)
                 // TODO: include text size in model
-                    .font(.system(size: 30))
+                    .font(.system(size: box.fontSize))
                     .fontWeight(box.isBold ? .bold : .none)
                     .foregroundColor(box.textColor)
                     .scaleEffect(box.scale * box.lastScale)

@@ -9,7 +9,13 @@ import SwiftUI
 import PencilKit
 
 struct DrawingScreen: View {
+    @Environment(\.undoManager) private var undoManager
+    
     @EnvironmentObject var model: DrawingViewModel
+    
+    @State private var canUndo = false
+    private let undoObserver = NotificationCenter.default.publisher(for: .NSUndoManagerCheckpoint)
+    
     
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -31,8 +37,7 @@ struct DrawingScreen: View {
                             
                             ForEach(model.textBoxes) { box in
                                 Text(model.textBoxes[model.currentIndex].id == box.id && model.addNewBox ? "" : box.text)
-                                // TODO: include text size in model
-                                    .font(.system(size: 30))
+                                    .font(.system(size: box.fontSize))
                                     .fontWeight(box.isBold ? .bold : .none)
                                     .foregroundColor(box.textColor)
                                     .scaleEffect(box.scale * box.lastScale)
@@ -50,32 +55,67 @@ struct DrawingScreen: View {
                                         }
                                     }
                             }
-                            ToolPicker()
+                            if model.addNewBox {
+                                TextScreen()
+                                    .environmentObject(model)
+                                    .zIndex(1)
+                            }
+                            ToolPicker(canUndo: $canUndo)
                                 .environmentObject(model)
+                                .zIndex(1.2)
                         }
                     )
                 }
             }
         }
-        .navigationBarItems(trailing: HStack {
-            Button {
-                model.saveImage()
-            } label: {
-                Text("Save")
-            }
-            Button {
-                model.textBoxes.append(TextBox())
-                
-                model.currentIndex = model.textBoxes.count - 1
-                
-                withAnimation {
-                    model.addNewBox.toggle()
+        .navigationBarItems(
+            leading:
+                Button {
+                    if model.addNewBox {
+                        model.cancelTextView()
+                    } else {
+                        undoManager?.undo()
+                    }
+                } label: {
+                    if model.addNewBox {
+                        Text("Cancel")
+                    } else {
+                        Image("undo")
+                            .renderingMode(.template)
+                    }
                 }
-                // TODO: closing ToolPicker
-            } label: {
-                Image(systemName: "plus")
-            }
-        })
+                .disabled(model.addNewBox ? false : !canUndo)
+                .onReceive(undoObserver) { _ in
+                    self.canUndo = self.undoManager!.canUndo
+                }
+            ,
+            trailing:
+                Button {
+                    if model.addNewBox {
+                        model.textBoxes[model.currentIndex].isAdded = true
+                        // TODO: show ToolPicker
+                        withAnimation {
+                            model.addNewBox = false
+                        }
+                    } else {
+                        model.canvas.drawing = PKDrawing()
+                        undoManager?.removeAllActions()
+                        undoManager?.undo()
+                    }
+                } label: {
+                    if model.addNewBox {
+                        Text("Done")
+                            .fontWeight(.semibold)
+                    } else {
+                        Text("Clear All")
+                    }
+                }
+                .disabled(model.addNewBox ? false : !canUndo)
+                .onReceive(undoObserver) { _ in
+                    self.canUndo = self.undoManager!.canUndo
+                }
+            
+        )
     }
     
     func getIndex(textBox: TextBox) -> Int {
@@ -89,7 +129,7 @@ struct DrawingScreen: View {
 
 struct DrawingScreen_Previews: PreviewProvider {
     static var previews: some View {
-        Home()
+        Home(isAuthorized: true)
     }
 }
 

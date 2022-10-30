@@ -7,13 +7,25 @@
 
 import SwiftUI
 import PhotosUI
+import Lottie
 
 struct AccessScreen: View {
     @Binding var isAuthorized: Bool
+    @State var animation: Bool = true
+    
+    @State var animationView = LottieAnimationView(name: "duck")
     
     var body: some View {
         VStack {
             Spacer()
+            
+            LottieView(animationView: $animationView)
+                .frame(width: 144, height: 144)
+                .onAppear {
+                    animationView.loopMode = .loop
+                    animationView.play()
+                }
+            
             Text("Access Your Photos And Videos")
                 .font(.system(size: 20, weight: .semibold))
                 .padding()
@@ -38,16 +50,41 @@ struct AccessScreen: View {
                     gotoAppPrivacySettings()
                 }
             } label: {
-                HStack {
-                    Spacer()
-                    Text("Allow Access")
-                        .font(.system(size: 17, weight: .semibold))
-                        .padding(.vertical, 15)
-                        .foregroundColor(Color.white)
-                    Spacer()
+                
+                ZStack {
+                    HStack {
+                        Spacer()
+                        Text("Allow Access")
+                            .font(.system(size: 17, weight: .semibold))
+                            .padding(.vertical, 15)
+                            .foregroundColor(Color.white)
+                        Spacer()
+                    }
+                    .background(
+                        Color(#colorLiteral(red: 0.07450980693101883, green: 0.5686274766921997, blue: 1, alpha: 1))
+                    )
+                    .cornerRadius(10)
+                    HStack {
+                        Spacer()
+                        Text("Allow Access")
+                            .font(.system(size: 17, weight: .semibold))
+                            .padding(.vertical, 15)
+                            .foregroundColor(Color.white)
+                        Spacer()
+                    }
+                    .background(Color.white.opacity(0.4))
+                    .cornerRadius(10)
+                    .mask(
+                        Rectangle()
+                            .fill(LinearGradient(gradient: .init(colors: [.clear, .white, .clear]), startPoint: .leading, endPoint: .center))
+                            .offset(x: self.animation ? -400 : 400)
+                    )
                 }
-                .background(Color.blue)
-                .cornerRadius(10)
+                .onAppear {
+                    withAnimation(Animation.default.speed(0.2).delay(0).repeatForever(autoreverses: false)) {
+                        self.animation.toggle()
+                    }
+                }
             }
             .padding(.horizontal, 16)
             Spacer()
@@ -58,11 +95,11 @@ struct AccessScreen: View {
     
     func gotoAppPrivacySettings() {
         guard let url = URL(string: UIApplication.openSettingsURLString),
-            UIApplication.shared.canOpenURL(url) else {
-                assertionFailure("Not able to open App privacy settings")
-                return
+              UIApplication.shared.canOpenURL(url) else {
+            assertionFailure("Not able to open App privacy settings")
+            return
         }
-
+        
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
 }
@@ -70,5 +107,26 @@ struct AccessScreen: View {
 struct AccessScreen_Previews: PreviewProvider {
     static var previews: some View {
         AccessScreen(isAuthorized: .constant(false))
+    }
+}
+
+struct LottieView: UIViewRepresentable {
+    @Binding var animationView: LottieAnimationView
+    
+    func makeUIView(context: Context) -> some UIView {
+        let view = UIView(frame: .zero)
+        animationView.contentMode = .scaleAspectFit
+        
+        view.addSubview(animationView)
+        
+        animationView.translatesAutoresizingMaskIntoConstraints = false
+        animationView.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
+        animationView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+        
+        return view
+    }
+    
+    func updateUIView(_ uiView: UIViewType, context: Context) {
+        
     }
 }
