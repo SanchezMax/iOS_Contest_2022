@@ -2,7 +2,7 @@
 //  DrawingScreen.swift
 //  IOSContest2022
 //
-//  Created by Aleksey Novikov on 27.10.2022.
+//  Created by Maksim Zykin on 27.10.2022.
 //
 
 import SwiftUI

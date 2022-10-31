@@ -2,7 +2,7 @@
 //  Tool.swift
 //  IOSContest2022
 //
-//  Created by Aleksey Novikov on 29.10.2022.
+//  Created by Maksim Zykin on 29.10.2022.
 //
 
 import Foundation
