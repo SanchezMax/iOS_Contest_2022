@@ -236,6 +236,7 @@ struct ToolPicker: View {
             .modifier(CustomBackground())
             if showWidthIndicator {
                 Circle()
+                    .fill(model.tools[selectedTool.index].color!.opacity(model.tools[selectedTool.index].opacity))
                     .frame(width: model.tools[selectedTool.index].width)
                     .transition(.opacity)
             }
