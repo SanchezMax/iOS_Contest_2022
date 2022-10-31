@@ -9,7 +9,7 @@
 To build this project, you have to use MacOS and have Xcode installed.
 Then, open the project by double-clicking "IOSContest2022.xcodeproj".
 Make sure you've signed it with your Team's signification ("iOSContest2022" -> "Signing & Capabilities" -> Choose your "Team") and fetched all requiered dependencies (automatically, just wait for the end of fetching). 
-Finally, in the upper menu choose "Product" -> "Build"(or simply press command + B).
+After that, in the upper menu choose "Product" -> "Build"(or simply press command + B). To run application, choose required iOS Simulator or Device and click "Run" button above project navigator.
 
 ## Maintainers
 
