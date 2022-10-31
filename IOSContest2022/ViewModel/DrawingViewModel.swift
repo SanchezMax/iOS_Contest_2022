@@ -31,10 +31,13 @@ class DrawingViewModel: ObservableObject {
     @Published var rect: CGRect = .zero
     
     @Published var showAlert = false
+    @Published var isOneButton = false
     @Published var title = ""
     @Published var message = ""
     @Published var action: (() -> Void)? = nil
     @Published var actionMessage = ""
+    
+    @Published var selectedOption: Options = .draw
     
     func cancelImageEditing() -> Void {
         withAnimation {
@@ -53,6 +56,7 @@ class DrawingViewModel: ObservableObject {
         
         if !textBoxes[currentIndex].isAdded {
             textBoxes.removeLast()
+            currentIndex = textBoxes.count - 1
         }
     }
     
@@ -94,11 +98,20 @@ class DrawingViewModel: ObservableObject {
         return index
     }
     
+    func unavailableAlert() {
+        self.title = "Not available"
+        self.message = "This function is currently in development."
+        self.actionMessage = "Ok"
+        self.isOneButton = true
+        self.showAlert.toggle()
+    }
+    
     func unsavedAlert() {
         self.title = "Unsaved changes"
         self.message = "Are you sure you want to discard this media? It will be lost"
         self.action = cancelImageEditing
         self.actionMessage = "Discard"
+        self.isOneButton = false
         self.showAlert.toggle()
     }
     
@@ -113,7 +126,7 @@ class DrawingViewModel: ObservableObject {
                 // TODO: include text size in model
                     .font(.system(size: box.fontSize))
                     .fontWeight(box.isBold ? .bold : .none)
-                    .foregroundColor(box.textColor)
+                    .foregroundColor(box.textColor?.opacity(box.textOpacity))
                     .scaleEffect(box.scale * box.lastScale)
                     .rotationEffect(box.angle + box.lastAngle)
                     .offset(x: box.offset.width + box.lastOffset.width, y: box.offset.height + box.lastOffset.height)
@@ -135,9 +148,7 @@ class DrawingViewModel: ObservableObject {
         
         if let image = generatedImage?.pngData() {
             UIImageWriteToSavedPhotosAlbum(UIImage(data: image)!, nil, nil, nil)
-            print("success....")
-            self.message = "Saved Successfully !!!"
-            self.showAlert.toggle()
+            cancelImageEditing()
         }
     }
 }

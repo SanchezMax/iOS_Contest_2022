@@ -10,9 +10,10 @@ import SwiftUI
 import PencilKit
 
 struct Tool {
-    let base: String
+    var base: String
     let tip: String?
     var color: Color?
+    var opacity: Double = 1.0
     let padding: CGFloat?
     var width: CGFloat
     let isDrawing: Bool
@@ -36,6 +37,58 @@ struct Tool {
             self.tool = PKLassoTool()
         } else {
             self.tool = PKEraserTool(eraserType!)
+        }
+    }
+}
+
+
+enum Eraser: String, CaseIterable, Identifiable {
+    case bitmap
+    case blur
+    case vector
+    
+    var id: Self {
+        self
+    }
+    
+    var title: String {
+        switch self {
+        case .bitmap:
+            return "Pixels"
+        case .blur:
+            return "Blur"
+        case .vector:
+            return "Objects"
+        }
+    }
+}
+
+enum Tools: CaseIterable, Identifiable {
+    case pen
+    case brush
+    case neon
+    case pencil
+    case lasso
+    case eraser
+    
+    var id: Self {
+        self
+    }
+    
+    var index: Int {
+        switch self {
+        case .pen:
+            return 0
+        case .brush:
+            return 1
+        case .neon:
+            return 2
+        case .pencil:
+            return 3
+        case .lasso:
+            return 4
+        case .eraser:
+            return 5
         }
     }
 }

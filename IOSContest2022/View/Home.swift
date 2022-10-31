@@ -48,7 +48,11 @@ struct Home: View {
             }
         }
         .alert(isPresented: $model.showAlert) {
-            Alert(title: Text(model.title), message: Text(model.message), primaryButton: .destructive(Text(model.actionMessage), action: model.action), secondaryButton: .cancel())
+            if model.isOneButton {
+                return Alert(title: Text(model.title), message: Text(model.message), dismissButton: .default(Text(model.actionMessage)))
+            } else {
+                return Alert(title: Text(model.title), message: Text(model.message), primaryButton: .destructive(Text(model.actionMessage), action: model.action), secondaryButton: .cancel())
+            }
         }
     }
 }

@@ -89,6 +89,7 @@ struct AccessScreen: View {
             .padding(.horizontal, 16)
             Spacer()
         }
+        .edgesIgnoringSafeArea(.all)
         .transition(.move(edge: .bottom))
         .zIndex(3)
     }
@@ -107,26 +108,5 @@ struct AccessScreen: View {
 struct AccessScreen_Previews: PreviewProvider {
     static var previews: some View {
         AccessScreen(isAuthorized: .constant(false))
-    }
-}
-
-struct LottieView: UIViewRepresentable {
-    @Binding var animationView: LottieAnimationView
-    
-    func makeUIView(context: Context) -> some UIView {
-        let view = UIView(frame: .zero)
-        animationView.contentMode = .scaleAspectFit
-        
-        view.addSubview(animationView)
-        
-        animationView.translatesAutoresizingMaskIntoConstraints = false
-        animationView.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
-        animationView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-        
-        return view
-    }
-    
-    func updateUIView(_ uiView: UIViewType, context: Context) {
-        
     }
 }

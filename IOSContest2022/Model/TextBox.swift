@@ -20,7 +20,26 @@ struct TextBox: Identifiable {
     var lastAngle: Angle = .zero
     var offset: CGSize = .zero
     var lastOffset: CGSize = .zero
-    var textColor: Color = .white
+    var textColor: Color? = .white
+    var textOpacity: Double = 1.0
     
     var isAdded: Bool = false
+}
+
+enum Options: String, CaseIterable, Identifiable {
+    case draw
+    case text
+    
+    var id: Self {
+        self
+    }
+    
+    var title: String {
+        switch self {
+        case .draw:
+            return "Draw"
+        case .text:
+            return "Text"
+        }
+    }
 }

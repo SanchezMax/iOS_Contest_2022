@@ -39,7 +39,7 @@ struct DrawingScreen: View {
                                 Text(model.textBoxes[model.currentIndex].id == box.id && model.addNewBox ? "" : box.text)
                                     .font(.system(size: box.fontSize))
                                     .fontWeight(box.isBold ? .bold : .none)
-                                    .foregroundColor(box.textColor)
+                                    .foregroundColor(box.textColor?.opacity(box.textOpacity) ?? Color.white)
                                     .scaleEffect(box.scale * box.lastScale)
                                     .rotationEffect(box.angle + box.lastAngle)
                                     .offset(x: box.offset.width + box.lastOffset.width, y: box.offset.height + box.lastOffset.height)
@@ -49,7 +49,7 @@ struct DrawingScreen: View {
                                             .simultaneously(with: model.zoom(box: box)))
                                     .onLongPressGesture {
                                         // TODO: Close ToolPicker
-                                        model.currentIndex = getIndex(textBox: box)
+                                        model.currentIndex = model.getIndex(textBox: box)
                                         withAnimation {
                                             model.addNewBox = true
                                         }
@@ -58,7 +58,6 @@ struct DrawingScreen: View {
                             if model.addNewBox {
                                 TextScreen()
                                     .environmentObject(model)
-                                    .zIndex(1)
                             }
                             ToolPicker(canUndo: $canUndo)
                                 .environmentObject(model)
@@ -72,6 +71,7 @@ struct DrawingScreen: View {
             leading:
                 Button {
                     if model.addNewBox {
+                        model.selectedOption = .draw
                         model.cancelTextView()
                     } else {
                         undoManager?.undo()
@@ -89,9 +89,11 @@ struct DrawingScreen: View {
                     self.canUndo = self.undoManager!.canUndo
                 }
             ,
+            
             trailing:
                 Button {
                     if model.addNewBox {
+//                        model.selectedOption = .draw
                         model.textBoxes[model.currentIndex].isAdded = true
                         // TODO: show ToolPicker
                         withAnimation {
@@ -116,14 +118,6 @@ struct DrawingScreen: View {
                 }
             
         )
-    }
-    
-    func getIndex(textBox: TextBox) -> Int {
-        let index = model.textBoxes.firstIndex { box in
-            textBox.id == box.id
-        } ?? 0
-        
-        return index
     }
 }
 

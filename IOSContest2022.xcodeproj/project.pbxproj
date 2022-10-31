@@ -15,6 +15,9 @@
 		70990DF0290BB44100AD1F4D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70990DEF290BB44100AD1F4D /* AppDelegate.swift */; };
 		70990DF2290BB46500AD1F4D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70990DF1290BB46500AD1F4D /* SceneDelegate.swift */; };
 		70990DF4290C047600AD1F4D /* AccessScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70990DF3290C047600AD1F4D /* AccessScreen.swift */; };
+		709AF149290F943100DAC360 /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709AF148290F943100DAC360 /* LottieView.swift */; };
+		709AF14B290FA75F00DAC360 /* ToolsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709AF14A290FA75F00DAC360 /* ToolsView.swift */; };
+		709AF14D290FC52C00DAC360 /* ColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709AF14C290FC52C00DAC360 /* ColorPicker.swift */; };
 		70B79F3F290A7B76007A34A0 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B79F3E290A7B76007A34A0 /* ImagePicker.swift */; };
 		70B79F41290A7E14007A34A0 /* DrawingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B79F40290A7E14007A34A0 /* DrawingViewModel.swift */; };
 		70B79F43290A83EB007A34A0 /* DrawingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B79F42290A83EB007A34A0 /* DrawingScreen.swift */; };
@@ -40,6 +43,9 @@
 		70990DEF290BB44100AD1F4D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		70990DF1290BB46500AD1F4D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		70990DF3290C047600AD1F4D /* AccessScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessScreen.swift; sourceTree = "<group>"; };
+		709AF148290F943100DAC360 /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
+		709AF14A290FA75F00DAC360 /* ToolsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsView.swift; sourceTree = "<group>"; };
+		709AF14C290FC52C00DAC360 /* ColorPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPicker.swift; sourceTree = "<group>"; };
 		70B79F3E290A7B76007A34A0 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		70B79F40290A7E14007A34A0 /* DrawingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingViewModel.swift; sourceTree = "<group>"; };
 		70B79F42290A83EB007A34A0 /* DrawingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingScreen.swift; sourceTree = "<group>"; };
@@ -84,17 +90,17 @@
 		704E2FE129080BE50012692E /* IOSContest2022 */ = {
 			isa = PBXGroup;
 			children = (
-				70990DEA290BACD000AD1F4D /* Info.plist */,
 				70990DEF290BB44100AD1F4D /* AppDelegate.swift */,
-				704E2FE429080BE50012692E /* ContentView.swift */,
-				704E2FE229080BE50012692E /* IOSContest2022App.swift */,
 				70990DF1290BB46500AD1F4D /* SceneDelegate.swift */,
+				704E2FE229080BE50012692E /* IOSContest2022App.swift */,
+				704E2FE429080BE50012692E /* ContentView.swift */,
+				70990DEA290BACD000AD1F4D /* Info.plist */,
 				704E2FE629080BE50012692E /* Assets.xcassets */,
 				70BF0EE7290EAC0600D92EC0 /* Animations */,
 				70E409F6290A6BE8001E1920 /* Model */,
-				704E2FE829080BE50012692E /* Preview Content */,
 				70E409F5290A6BE0001E1920 /* View */,
 				70E409F7290A6BEC001E1920 /* ViewModel */,
+				704E2FE829080BE50012692E /* Preview Content */,
 			);
 			path = IOSContest2022;
 			sourceTree = "<group>";
@@ -120,12 +126,15 @@
 			isa = PBXGroup;
 			children = (
 				70990DF3290C047600AD1F4D /* AccessScreen.swift */,
+				709AF14C290FC52C00DAC360 /* ColorPicker.swift */,
 				70BF0EE0290E66B700D92EC0 /* CustomSlider.swift */,
 				70B79F42290A83EB007A34A0 /* DrawingScreen.swift */,
 				70E409F8290A6CF0001E1920 /* Home.swift */,
 				70B79F3E290A7B76007A34A0 /* ImagePicker.swift */,
+				709AF148290F943100DAC360 /* LottieView.swift */,
 				70BF0EE2290E87CF00D92EC0 /* TextScreen.swift */,
 				70B79F44290A883A007A34A0 /* ToolPicker.swift */,
+				709AF14A290FA75F00DAC360 /* ToolsView.swift */,
 				70BF0EEE290EBDD800D92EC0 /* ToolView.swift */,
 			);
 			path = View;
@@ -228,12 +237,15 @@
 			files = (
 				704E2FE529080BE50012692E /* ContentView.swift in Sources */,
 				70B79F3F290A7B76007A34A0 /* ImagePicker.swift in Sources */,
+				709AF14D290FC52C00DAC360 /* ColorPicker.swift in Sources */,
 				70990DF4290C047600AD1F4D /* AccessScreen.swift in Sources */,
 				70C59C33290D22930046241D /* Tool.swift in Sources */,
 				70B79F43290A83EB007A34A0 /* DrawingScreen.swift in Sources */,
 				70990DF0290BB44100AD1F4D /* AppDelegate.swift in Sources */,
 				70B79F41290A7E14007A34A0 /* DrawingViewModel.swift in Sources */,
+				709AF149290F943100DAC360 /* LottieView.swift in Sources */,
 				70BF0EEF290EBDD900D92EC0 /* ToolView.swift in Sources */,
+				709AF14B290FA75F00DAC360 /* ToolsView.swift in Sources */,
 				70990DF2290BB46500AD1F4D /* SceneDelegate.swift in Sources */,
 				70BF0EE3290E87CF00D92EC0 /* TextScreen.swift in Sources */,
 				70E409F9290A6CF0001E1920 /* Home.swift in Sources */,
@@ -366,6 +378,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"IOSContest2022/Preview Content\"";
@@ -387,6 +400,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = Max.Zykin.IOSContest2022;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -401,6 +415,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"IOSContest2022/Preview Content\"";
@@ -422,6 +437,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = Max.Zykin.IOSContest2022;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
